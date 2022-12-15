@@ -9,6 +9,9 @@ entity User {
     lastname : String;
     profilepicture : LargeBinary;
     title : String;
+    workhours : Association to WorkHours;
+    project : Association to Project;
+    workschedule : Association to many WorkSchedule;
 }
 
 entity Admin {
@@ -21,7 +24,7 @@ entity Admin {
 
 entity WorkHours {
     key ID : UUID;
-    user : Association to User {username};
+    users : Association to many User {username};
     project : Association to Project {ID};
     day : Date;
     starttime : Time;
@@ -35,16 +38,18 @@ entity Project {
     startdate : Date;
     enddate : Date;
     maximumhours : Decimal;
+    workhours : Association to many WorkHours;
+    users : Association to many User {username};
     //Change information
 }
 
 entity WorkSchedule {
     key ID : UUID;
-    user : Association to User {username};
-    project : Association to Project {ID};
     weekday : Date;
     startdate : Date;
     enddate : Date;
     starttime : Time;
     endtime : Time;
+    user : Association to User {username};
+    project : Association to Project {ID};
 }
