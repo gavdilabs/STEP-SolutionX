@@ -7,6 +7,8 @@ Content-Type: application/json
 
 {"username": "Hello_User", "firstname": "Mac", "lastname": "Intosh", "title": "Apple Developer", "admin": false}
 
+
+
 ### Get Projects
 GET http://localhost:4004/test/Projects
 
@@ -16,6 +18,7 @@ POST http://localhost:4004/test/Projects
 Content-Type: application/json
 
 {"projectname": "Test project", "startdate": "2021-04-27", "enddate": "2021-04-30"}
+
 
 
 ### Get WorkHours
