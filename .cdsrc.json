@@ -1,1 +1,25 @@
-{}
+{
+    "[development]": {
+        "auth": {
+            "passport": {
+                "strategy": "mock",
+                "users": {
+                    "timemanager.user@tester.sap.com": {
+                        "password": "initial",
+                        "ID": "timemanager.user@tester.sap.com",
+                        "roles": [
+                            "User"
+                        ]
+                    },
+                    "timemanager.admin@tester.sap.com": {
+                        "password": "initial",
+                        "ID": "timemanager.admin@tester.sap.com",
+                        "roles": [
+                            "Admin"
+                        ]
+                    }
+                }
+            }
+        }
+    }
+}

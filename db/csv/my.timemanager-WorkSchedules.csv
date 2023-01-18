@@ -1,1 +1,4 @@
-ID;user;project;weekday;startdate;enddate;starttime;endtime
+ID;user_username;project_ID;weekday;startdate;enddate;starttime;endtime
+30466921-7d57-4e76-b14c-e53fd97dcb10;Xx_user_xX;;;;;;
+30466921-7d57-4e76-b14c-e53fd97dcb11;this_user;;;;;;
+30466921-7d57-4e76-b14c-e53fd97dcb12;admin_guy;;;;;;
