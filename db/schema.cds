@@ -1,30 +1,32 @@
 namespace my.timemanager;
 
 using { cuid, Country, managed } from '@sap/cds/common';
+//country ??
 
-
-entity Users {
-    key username : String;
+entity Users : cuid {
+    username : String;
     firstname : String;
     lastname : String;
     profilepicture : LargeBinary;
     title : String;
-    workhours : Association to WorkHours;
-    project : Association to Projects;
+    workhours : Association to many WorkHours;
     workschedule : Association to many WorkSchedules;
     admin : Boolean;
 }
 
 entity WorkHours : managed, cuid {
-    users : Association to many Users {username};
-    project : Association to Projects {ID};
+    users : Association to Users on users.username = users_ID; 
+    users_ID : String; //foreign key
+    projects : Association to many Projects on projects.ID = projects_ID; 
+    projects_ID : String; //foreign key
     day : Date;
     starttime : Time;
     endtime : Time;
-    //Change information
+    //managed = Change information
 }
 
 entity Projects : managed, cuid {
+    key ID : UUID;
     projectname : String;
     startdate : Date;
     enddate : Date;
@@ -35,13 +37,13 @@ entity Projects : managed, cuid {
 }
 
 entity WorkSchedules : cuid {
-    weekday : Date;
-    startdate : Date;
-    enddate : Date;
-    starttime : Time;
+    //weekday : many {kind:String};
+    startdate : Date; //based on contract
+    enddate : Date; //based on contract
+    starttime : Time; 
     endtime : Time;
-    user : Association to Users {username};
-    project : Association to Projects {ID};
+    user : Association to Users on user.username = user_ID;
+    user_ID : String; //foreign key
 }
 
 // entity Admins {

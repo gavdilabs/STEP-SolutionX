@@ -5,7 +5,16 @@ GET http://localhost:4004/test/Users
 POST http://localhost:4004/test/Users
 Content-Type: application/json
 
-{"username": "Hello_User", "firstname": "Mac", "lastname": "Intosh", "title": "Apple Developer", "admin": false}
+{"username": "Hewo_User", "firstname": "Mac", "lastname": "Intosh", "title": "Apple Developer", "admin": false}
+
+
+###
+GET http://localhost:4004/test/WorkSchedules
+###
+POST http://localhost:4004/test/WorkSchedules
+Content-Type: application/json
+
+{"startdate": "01-01-2001", "enddate": "01-10-2001"}
 
 
 
