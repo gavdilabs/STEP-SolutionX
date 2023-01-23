@@ -37,7 +37,9 @@ entity Projects : managed, cuid {
 }
 
 entity WorkSchedules : cuid {
-    //weekday : many {kind:String};
+    weekdays :  array of {
+        weekday : String;
+    };
     startdate : Date; //based on contract
     enddate : Date; //based on contract
     starttime : Time; 
