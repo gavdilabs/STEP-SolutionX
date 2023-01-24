@@ -20,8 +20,8 @@ entity WorkHours : managed, cuid {
     projects : Association to many Projects on projects.ID = projects_ID; 
     projects_ID : String; //foreign key
     day : Date;
-    starttime : Time;
-    endtime : Time;
+    starttime : DateTime;
+    endtime : DateTime;
     //managed = Change information
 }
 

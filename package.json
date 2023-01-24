@@ -13,7 +13,8 @@
     "sqlite3": "^5.0.4"
   },
   "scripts": {
-    "start": "cds run"
+    "start": "cds run",
+    "watch": "cds watch"
   },
   "engines": {
     "node": "^16.15"
