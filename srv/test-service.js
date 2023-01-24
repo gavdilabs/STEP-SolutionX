@@ -1,6 +1,6 @@
 const cds = require ('@sap/cds');
 module.exports = async function(srv) {
-    const {WorkHours} = srv.entities;
+    const {WorkHours, Projects} = srv.entities;
 
         // Filter WorkHours on querer's UUID and endtime
         // Check if starttime is > 11 hours past from previous Endtime
@@ -34,12 +34,16 @@ module.exports = async function(srv) {
             if (startTime.getTime() < endTime.getTime()) {
                 req.reject(400, 'der er under 11 timer');
             }
-        
-        
-
         }
+
+        //check if user is assigned to project
+        //check if date we query is within start- and end date
+        const 
+
+        for(const )
+
+
         
-        //console.log(req);
     })
 
 }
