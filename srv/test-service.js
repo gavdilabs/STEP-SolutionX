@@ -34,19 +34,13 @@ module.exports = async function(srv) {
             if (startTime.getTime() < endTime.getTime()) {
                 req.reject(400, 'der er under 11 timer');
             }
+        
+        
 
         }
         
         //console.log(req);
-    }),
-
-    //If srv.before is true, create new workhours, 
-    //If srv.before is false, cancel request/catch error
-    srv.on('WorkHours', async (req) => {
-        return req; 
-
     })
-
 
 }
 
