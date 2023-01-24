@@ -8,15 +8,6 @@ Content-Type: application/json
 {"username": "Hewo_User", "firstname": "Mac", "lastname": "Intosh", "title": "Apple Developer", "admin": false}
 
 
-###
-GET http://localhost:4004/test/WorkSchedules
-###
-POST http://localhost:4004/test/WorkSchedules
-Content-Type: application/json
-
-{"startdate": "01-01-2001", "enddate": "01-10-2001"}
-
-
 
 ### Get Projects
 GET http://localhost:4004/test/Projects
@@ -43,3 +34,9 @@ Content-Type: application/json
 ### Get weekdays
 GET http://localhost:4004/test/WorkSchedules(30466921-7d57-4e76-b14c-e53fd97dcb10)/weekdays/$count
 # "weekdays" is a complex collection, so we cannot query it? Why?
+
+### Post a WorkSchedule
+POST http://localhost:4004/test/WorkSchedules
+Content-Type: application/json
+
+{"weekday": 1, "startdate": "2023-03-21", "enddate": "2023-12-03"}
