@@ -22,6 +22,38 @@ module.exports = async function(srv) {
         //creates local variable userID with request users_ID
         const userID = data["users_ID"];
 
+        
+
+        //////// CHECK VALIDITY PERIOD //////////
+        // Get query's start- and endtime (saved as variables near the top)
+        // Get project's start- and enddate from project_ID
+        // Check if query is within start- and endtime(date) of queried project
+
+        // Get queried project using filter and project_ID from queried WorkHours
+        const projFilter = await db.get(Projects).where({"ID": data["projects_ID"]});
+        // Get the first (and only) element in the array "projFilter"
+        const projData = projFilter[0];
+        console.log(projFilter);
+
+        // Create new variables for: "startdate", "enddate", and "projectname"
+        const projSD = new Date(projData["startdate"]);
+        const projED = new Date(projData["enddate"]);
+        const projectName = projData["projectname"];
+
+        // Set hours of project's start- and enddate, and workhours start- and endtime = 0,
+        // to only compare the dates in validity period check.
+        projSD.setHours(0,0,0);
+        projED.setHours(0,0,0);
+        startTime.setHours(0,0,0);
+        endTime.setHours(0,0,0);
+
+        // Check if start- or endtime of workhours is outside of the validity period of project
+        // (starttime/endtime < project startdate || starttime/endtime > enddate)
+        if (startTime.getTime() < projSD.getTime() || endTime.getTime() < projSD.getTime() || startTime.getTime() > projED.getTime() || endTime.getTime() > projED.getTime()) {
+            req.reject(400, `The work hours selected are outside the validity period for project: '${projectName}'.`);
+        }
+
+
         ///////////// CHECK 11 HOUR INTERVAL ////////////////
         //Filter all workhours with requested users_ID and saves as local variable prevHours. 
         //Await means waiting for query and filter to finish
@@ -38,29 +70,10 @@ module.exports = async function(srv) {
             if (startTime.getTime() < uEndTime.getTime()) {
                 req.reject(400, 'It has been less than 11 hours since last reported work hours');
             }
-        }
+         }
 
-        //////// CHECK VALIDITY PERIOD //////////
-        // Get query's start- and endtime
-        // Get project_ID and project's start- and enddate
-        // Check if query is within start- and endtime(date) of queried project
-
-        const projectName = data["projectname"];
-        const projSD = new Date(["startdate"]);
-        const projED = new Date(["enddate"]);
-
-        projSD.setTime(0,0,0,0);
-        projED.setTime(0,0,0,0);
-        startTime.setTime(0,0,0,0);
-        endTime.setTime(0,0,0,0);
-        console.log(endTime)
-
-        if (startTime.getTime() < projSD.getTime() && startTime.getTime() > projED.getTime() && endtime.getTime() < projSD.getTime() && endTime.getTime() > projED.getTime()) {
-            req.reject(400, `The work hours selected are out the project: ${projectName}'s validity period`);
-        }
-        
-    })
-
+         
+    })    
 }
 
 
