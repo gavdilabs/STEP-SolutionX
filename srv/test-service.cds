@@ -4,7 +4,7 @@ service TestService {
   //entity Admins as projection on my.Admins;
 
   // Following restricts access to Projects, but makes it hard to query...
-  /*entity Projects @(restrict : [
+  entity Projects @(restrict : [
             {
                 grant : [ 'READ' ],
                 to : [ 'User' ]
@@ -13,8 +13,8 @@ service TestService {
                 grant : [ '*' ],
                 to : [ 'Admin' ]
             }
-        ]) as projection on my.Projects;*/
-  entity Projects as projection on my.Projects;
+        ]) as projection on my.Projects;
+  //entity Projects as projection on my.Projects;
 
   entity WorkHours as projection on my.WorkHours;
 
