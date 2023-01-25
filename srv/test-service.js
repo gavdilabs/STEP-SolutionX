@@ -9,6 +9,8 @@ module.exports = async function(srv) {
         //Create Handler runs before CREATE finishes. 
     srv.before('CREATE', 'WorkHours', async (req) => {
         
+
+
         //Grabs only the requested entities from the DB
         const db = srv.transaction(req);
 
@@ -22,7 +24,25 @@ module.exports = async function(srv) {
         //creates local variable userID with request users_ID
         const userID = data["users_ID"];
 
-        
+        /////////CHECK ABSENCE ////////
+        // Check if absence is True
+        // Creates two new constants containing start and end hours of the workday. 
+        if (data["absence"]) {
+            const WHStartTime = new Date();
+            WHStartTime.setHours(8,0,0)
+            const WHEndTime = new Date;
+            WHEndTime.setHours(16,0,0);
+
+
+            //Check if start- and endtime of workhours is outside of expected working hours
+            //If true, reject. 
+            if (startTime.getTime() < WHStartTime.getTime() || endTime.getTime() < WHStartTime.getTime() || startTime.getTime() > WHEndTime.getTime() || endTime.getTime() > WHEndTime.getTime()) {
+                req.reject(400, `You cannot register absence outside of workhours`);
+                return;
+            }
+            return;
+        }
+
 
         //////// CHECK VALIDITY PERIOD //////////
         // Get query's start- and endtime (saved as variables near the top)

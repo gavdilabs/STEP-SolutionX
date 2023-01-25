@@ -22,6 +22,7 @@ entity WorkHours : managed, cuid {
     day : Date;
     starttime : DateTime;
     endtime : DateTime;
+    absence : Boolean;
     //managed = Change information
 }
 
