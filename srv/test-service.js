@@ -17,26 +17,26 @@ module.exports = async function(srv) {
         //creates local variable data
         const data = req.data;
         //creates local variable startTime from request starttime
-        const startTime = new Date(data["starttime"]);
-        const endTime = new Date(data["endtime"]);
+        const startTime = new Date(data.starttime);
+        const endTime = new Date(data.endtime);
 
         
         //creates local variable userID with request users_ID
-        const userID = data["users_ID"];
+        const userID = data.users_ID;
 
         /////////CHECK ABSENCE ////////
         // Check if absence is True
         // Creates two new constants containing start and end hours of the workday. 
         if (data["absence"]) {
-            const WHStartTime = new Date();
+            const WHStartTime = new Date(data.starttime);
             WHStartTime.setHours(8,0,0)
-            const WHEndTime = new Date;
+            const WHEndTime = new Date(data.endtime);
             WHEndTime.setHours(16,0,0);
 
 
             //Check if start- and endtime of workhours is outside of expected working hours
             //If true, reject. 
-            if (startTime.getTime() < WHStartTime.getTime() || endTime.getTime() < WHStartTime.getTime() || startTime.getTime() > WHEndTime.getTime() || endTime.getTime() > WHEndTime.getTime()) {
+            if (!(startTime.getTime() >= WHStartTime.getTime() && endTime.getTime() > WHStartTime.getTime() && startTime.getTime() < WHEndTime.getTime() && endTime.getTime() <= WHEndTime.getTime())) {
                 req.reject(400, `You cannot register absence outside of workhours`);
                 return;
             }
@@ -56,9 +56,9 @@ module.exports = async function(srv) {
         console.log(projFilter);
 
         // Create new variables for: "startdate", "enddate", and "projectname"
-        const projSD = new Date(projData["startdate"]);
-        const projED = new Date(projData["enddate"]);
-        const projectName = projData["projectname"];
+        const projSD = new Date(projData.startdate);
+        const projED = new Date(projData.enddate);
+        const projectName = projData.projectname;
 
         // Set hours of project's start- and enddate, and workhours start- and endtime = 0,
         // to only compare the dates in validity period check.

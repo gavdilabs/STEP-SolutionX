@@ -27,12 +27,11 @@ entity WorkHours : managed, cuid {
 }
 
 entity Projects : managed, cuid {
-    key ID : UUID;
     projectname : String;
     startdate : Date;
     enddate : Date;
     maximumhours : Decimal;
-    workhours : Association to many WorkHours;
+    currenthours: Decimal;
     users : Association to many Users {username};
     //Change information
 }
@@ -45,8 +44,6 @@ entity WorkSchedules : cuid {
         Thursday = 3;
         Friday = 4;
     };
-
-
     startdate : Date; //based on contract
     enddate : Date; //based on contract
     starttime : Time; 
@@ -54,6 +51,14 @@ entity WorkSchedules : cuid {
     user : Association to Users on user.username = user_ID;
     user_ID : String; //foreign key
 }
+
+entity Day {
+    key ID : Integer; //hvilken type ID? 
+    fromtime : Time; 
+    totime : Time;
+}
+
+
 
 // entity Admins {
 //     key username : String;
