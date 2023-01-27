@@ -37,25 +37,27 @@ entity Projects : managed, cuid {
 }
 
 entity WorkSchedules : cuid {
-    weekday : Integer enum {
-        Monday = 0;
-        Tuesday = 1;
-        Wednesday = 2;
-        Thursday = 3;
-        Friday = 4;
-    };
     startdate : Date; //based on contract
     enddate : Date; //based on contract
     starttime : Time; 
     endtime : Time;
     user : Association to Users on user.username = user_ID;
     user_ID : String; //foreign key
+    dayschedule : Association to many DaySchedules;
 }
 
-entity Day {
-    key ID : Integer; //hvilken type ID? 
-    fromtime : Time; 
-    totime : Time;
+entity DaySchedules: cuid, managed {
+    fromtime : Time not null; 
+    totime : Time not null;
+    weekday : Integer enum {
+        Monday = 0;
+        Tuesday = 1;
+        Wednesday = 2;
+        Thursday = 3;
+        Friday = 4;
+        Saturday = 5; 
+        Sunday = 6;
+    } not null;
 }
 
 
