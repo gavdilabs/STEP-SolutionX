@@ -47,7 +47,7 @@ entity DayBindings {
     key workScheduleID: String; 
     key dayScheduleID: String; 
     workSchedule: Association to one WorkSchedules on workScheduleID = workSchedule.ID;
-    dayBindings: Association to one DaySchedules on dayScheduleID = dayBindings.ID;
+    daySchedule: Association to one DaySchedules on dayScheduleID = daySchedule.ID;
 }
 
 entity DaySchedules: cuid, managed {

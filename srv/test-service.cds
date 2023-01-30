@@ -23,6 +23,7 @@ service TestService {
   entity WorkSchedules as projection on my.WorkSchedules;
 
   entity DaySchedules as projection on my.DaySchedules;
+  entity DayBindings as projection on my.DayBindings;
 
   function SayHi(message: String) returns String;
 

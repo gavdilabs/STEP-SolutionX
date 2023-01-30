@@ -20,6 +20,8 @@ module.exports = async function(srv) {
         const startTime = new Date(data.starttime);
         const endTime = new Date(data.endtime);
 
+        startTime.setMinutes(startTime.getMinutes()+startTime.getTimezoneOffset());
+        endTime.setMinutes(endTime.getMinutes()+endTime.getTimezoneOffset());
         
         //creates local variable userID with request users_ID
         const userID = data.users_ID;
@@ -29,10 +31,8 @@ module.exports = async function(srv) {
         // Creates two new constants containing start and end hours of the workday. 
         if (data.absence) {
             const currentDay = new Date(data.day).getDay();
-            const WHStartTime = new Date(data.starttime);
-            WHStartTime.setHours(8,0,0)
-            const WHEndTime = new Date(data.endtime);
-            WHEndTime.setHours(16,0,0);
+            const WHStartTime = new Date(data.day);
+            const WHEndTime = new Date(data.day);
 
             const workSchedules = await cds.run(SELECT.from(WorkSchedules)
                 .where(`user_ID = '${req.data.user_ID}'`)); 
@@ -40,14 +40,21 @@ module.exports = async function(srv) {
 
             const dayBindings = await cds.run(SELECT.from(DayBindings)
                 .where(`workScheduleID = '${workSchedule.ID}'`)
-                .columns(r => r.dayBindings('*')));
+                //.columns(['*', 'dayBindings']))
+                .columns(r => r.daySchedule('*')));
 
             let givenDaySchedule; 
             for(const el of dayBindings) {
-                if(el.dayBindings.weekday !== currentDay) continue;
-                givenDaySchedule = el.dayBindings;
+                if(el.daySchedule.weekday !== currentDay) continue;
+                givenDaySchedule = el.daySchedule;
                 break;
             }
+
+
+            const fromTimeArr = givenDaySchedule.fromtime.split(':');
+            const toTimeArr = givenDaySchedule.totime.split(':');
+            WHStartTime.setHours(parseInt(fromTimeArr[0]), parseInt(fromTimeArr[1]), parseInt(fromTimeArr[2]));
+            WHEndTime.setHours(parseInt(toTimeArr[0]), parseInt(toTimeArr[1]), parseInt(toTimeArr[2]));
 
 
             //Check if start- and endtime of workhours is outside of expected working hours
