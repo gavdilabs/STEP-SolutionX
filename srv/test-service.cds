@@ -17,16 +17,10 @@ service TestService {
   //entity Projects as projection on my.Projects;
 
   entity WorkHours as projection on my.WorkHours;
-
   entity Users as projection on my.Users;
-
   entity WorkSchedules as projection on my.WorkSchedules;
-
   entity DaySchedules as projection on my.DaySchedules;
   entity DayBindings as projection on my.DayBindings;
-
-  function SayHi(message: String) returns String;
-
 
 
 }
