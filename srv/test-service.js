@@ -1,6 +1,6 @@
 const cds = require ('@sap/cds');
 module.exports = async function(srv) {
-    const {WorkHours, Projects} = srv.entities;
+    const {WorkHours, Projects, WorkSchedules, DayBindings} = srv.entities;
 
         // Filter WorkHours on querer's UUID and endtime
         // Check if starttime is > 11 hours past from previous Endtime
@@ -27,11 +27,27 @@ module.exports = async function(srv) {
         /////////CHECK ABSENCE ////////
         // Check if absence is True
         // Creates two new constants containing start and end hours of the workday. 
-        if (data["absence"]) {
+        if (data.absence) {
+            const currentDay = new Date(data.day).getDay();
             const WHStartTime = new Date(data.starttime);
             WHStartTime.setHours(8,0,0)
             const WHEndTime = new Date(data.endtime);
             WHEndTime.setHours(16,0,0);
+
+            const workSchedules = await cds.run(SELECT.from(WorkSchedules)
+                .where(`user_ID = '${req.data.user_ID}'`)); 
+            const workSchedule = workSchedules[0];
+
+            const dayBindings = await cds.run(SELECT.from(DayBindings)
+                .where(`workScheduleID = '${workSchedule.ID}'`)
+                .columns(r => r.dayBindings('*')));
+
+            let givenDaySchedule; 
+            for(const el of dayBindings) {
+                if(el.dayBindings.weekday !== currentDay) continue;
+                givenDaySchedule = el.dayBindings;
+                break;
+            }
 
 
             //Check if start- and endtime of workhours is outside of expected working hours
@@ -50,7 +66,7 @@ module.exports = async function(srv) {
         // Check if query is within start- and endtime(date) of queried project
 
         // Get queried project using filter and project_ID from queried WorkHours
-        const projFilter = await db.get(Projects).where({"ID": data["projects_ID"]});
+        const projFilter = await db.get(Projects).where({"ID": data.projects_ID});
         // Get the first (and only) element in the array "projFilter"
         const projData = projFilter[0];
         console.log(projFilter);

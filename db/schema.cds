@@ -4,59 +4,63 @@ using { cuid, Country, managed } from '@sap/cds/common';
 //country ??
 
 entity Users : cuid {
-    username : String;
-    firstname : String;
-    lastname : String;
+    username : String not null;
+    firstname : String not null;
+    lastname : String not null;
     profilepicture : LargeBinary;
-    title : String;
-    workhours : Association to many WorkHours;
+    title : String not null;
+    workhour : Association to many WorkHours;
     workschedule : Association to many WorkSchedules;
-    admin : Boolean;
+    admin : Boolean not null;
 }
 
 entity WorkHours : managed, cuid {
-    users : Association to Users on users.username = users_ID; 
-    users_ID : String; //foreign key
-    projects : Association to many Projects on projects.ID = projects_ID; 
-    projects_ID : String; //foreign key
-    day : Date;
-    starttime : DateTime;
-    endtime : DateTime;
-    absence : Boolean;
+    user : Association to one Users not null;
+    project : Association to one Projects not null;
+    day : Date not null;
+    starttime : DateTime not null;
+    endtime : DateTime not null;
+    absence : Boolean not null;
     //managed = Change information
 }
 
 entity Projects : managed, cuid {
-    projectname : String;
-    startdate : Date;
-    enddate : Date;
-    maximumhours : Decimal;
+    projectname : String not null;
+    startdate : Date not null;
+    enddate : Date not null;
+    maximumhours : Decimal not null;
     currenthours: Decimal;
-    users : Association to many Users {username};
+    user : Association to many Users;
     //Change information
 }
 
 entity WorkSchedules : cuid {
-    startdate : Date; //based on contract
-    enddate : Date; //based on contract
-    starttime : Time; 
-    endtime : Time;
-    user : Association to Users on user.username = user_ID;
-    user_ID : String; //foreign key
-    dayschedule : Association to many DaySchedules;
+    startdate : Date not null; //based on contract
+    enddate : Date not null; //based on contract
+    starttime : Time not null; 
+    endtime : Time not null;
+    user : Association to Users not null;
+    dayschedules : Association to many DayBindings on ID = dayschedules.workScheduleID;
+}
+
+entity DayBindings {
+    key workScheduleID: String; 
+    key dayScheduleID: String; 
+    workSchedule: Association to one WorkSchedules on workScheduleID = workSchedule.ID;
+    dayBindings: Association to one DaySchedules on dayScheduleID = dayBindings.ID;
 }
 
 entity DaySchedules: cuid, managed {
     fromtime : Time not null; 
     totime : Time not null;
     weekday : Integer enum {
-        Monday = 0;
-        Tuesday = 1;
-        Wednesday = 2;
-        Thursday = 3;
-        Friday = 4;
-        Saturday = 5; 
-        Sunday = 6;
+        Monday = 1;
+        Tuesday = 2;
+        Wednesday = 3;
+        Thursday = 4;
+        Friday = 5;
+        Saturday = 6; 
+        Sunday = 0;
     } not null;
 }
 

@@ -1,4 +1,4 @@
-ID;username;firstname;lastname;profilepicture;title;workhours_ID;workschedule_ID;admin
+ID;username;firstname;lastname;profilepicture;title;workhour_ID;workschedule_ID;admin
 40466921-7d57-4e76-b14c-e53fd97dcb11;Xx_user_xX;Kurt;Cobain;;Absolute Madlad;;30466921-7d57-4e76-b14c-e53fd97dcb10;false
 40466921-7d57-4e76-b14c-e53fd97dcb12;admin_guy;Will;Smith;;King of the Servers;;30466921-7d57-4e76-b14c-e53fd97dcb12;true
 40466921-7d57-4e76-b14c-e53fd97dcb13;this_user;Ariel;Mermaid;;Goodest Swimmer;;30466921-7d57-4e76-b14c-e53fd97dcb11;false
