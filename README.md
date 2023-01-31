@@ -1,25 +1,8 @@
-# Getting Started
+# Introduction
+So far this project contains the back-end functionality necessary to set up a time-regestration service.
 
-Welcome to your new project.
-
-It contains these folders and files, following our recommended project layout:
-
-File or Folder | Purpose
----------|----------
-`app/` | content for UI frontends goes here
-`db/` | your domain models and data go here
-`srv/` | your service models and code go here
-`package.json` | project metadata and configuration
-`readme.md` | this getting started guide
-
-
-## Next Steps
-
-- Open a new terminal and run `cds watch` 
-- (in VS Code simply choose _**Terminal** > Run Task > cds watch_)
-- Start adding content, for example, a [db/schema.cds](db/schema.cds).
-
-
-## Learn More
-
-Learn more at https://cap.cloud.sap/docs/get-started/.
+## Know issues from Challenge 1
+    - Absence does not check across dates (e.g. 23:00-07:00), as we assume the hours does not cross dates.
+    - Absence is currently implemented as normal work hours but with a boolean 'absence' set to true - consider its own entity?
+    - Validity period check does not take potential start- or end hours into account.
+    - 11 hour interval check currently only allows for new registrations of hours to be after the latest entry + 11 hours, probably problematic for admins to fix forgotton entries and/or potentially update old entries.

@@ -17,7 +17,6 @@ entity Users : cuid {
 entity WorkHours : managed, cuid {
     user : Association to one Users not null;
     project : Association to one Projects not null;
-    day : Date not null;
     starttime : DateTime not null;
     endtime : DateTime not null;
     absence : Boolean not null;
@@ -54,13 +53,13 @@ entity DaySchedules: cuid, managed {
     fromtime : Time not null; 
     totime : Time not null;
     weekday : Integer enum {
+        Sunday = 0;
         Monday = 1;
         Tuesday = 2;
         Wednesday = 3;
         Thursday = 4;
         Friday = 5;
         Saturday = 6; 
-        Sunday = 0;
     } not null;
 }
 

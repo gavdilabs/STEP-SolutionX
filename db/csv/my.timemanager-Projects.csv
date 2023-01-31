@@ -1,4 +1,4 @@
 ID;projectname;startdate;enddate;maximumhours;currenthours;user_ID
-20466921-7d57-4e76-b14c-e53fd97dcb11;A project about something;2023-02-19;2024-03-19;800;;
-20466921-7d57-4e76-b14c-e53fd97dcb12;A project about something else;2023-02-19;2024-03-19;450;;
-20466921-7d57-4e76-b14c-e53fd97dcb13;Another project about something;2023-02-19;2024-03-19;950;;
+20466921-7d57-4e76-b14c-e53fd97dcb11;A project about something;2023-01-01;2024-01-01;800;;
+20466921-7d57-4e76-b14c-e53fd97dcb12;A project about something else;2023-02-01;2023-09-01;450;;
+20466921-7d57-4e76-b14c-e53fd97dcb13;Another project about something;2024-01-01;2024-05-01;10;;

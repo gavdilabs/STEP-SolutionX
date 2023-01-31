@@ -1,29 +1,26 @@
 const cds = require ('@sap/cds');
 module.exports = async function(srv) {
     const {WorkHours, Projects, WorkSchedules, DayBindings} = srv.entities;
-
-        // Filter WorkHours on querer's UUID and endtime
-        // Check if starttime is > 11 hours past from previous Endtime
-        // If below is true = succeed, else = don't
     
         //Create Handler runs before CREATE finishes. 
     srv.before('CREATE', 'WorkHours', async (req) => {
         
 
 
-        //Grabs only the requested entities from the DB
+        // Grabs only the requested entities from the DB
         const db = srv.transaction(req);
 
-        //creates local variable data
+        // Creates local variable data
         const data = req.data;
-        //creates local variable startTime from request starttime
+        // Creates local variable startTime from request starttime
         const startTime = new Date(data.starttime);
         const endTime = new Date(data.endtime);
 
+        // Take timezone offset into account
         startTime.setMinutes(startTime.getMinutes()+startTime.getTimezoneOffset());
         endTime.setMinutes(endTime.getMinutes()+endTime.getTimezoneOffset());
         
-        //creates local variable userID with request users_ID
+        // Creates local variable userID with request users_ID
         const userID = data.user_ID;
 
 
@@ -33,7 +30,7 @@ module.exports = async function(srv) {
         // Creates two new constants containing start and end hours of the workday. 
         if (data.absence) {
             // Create new local constant currentDay, to check against the user's workschedule
-            const currentDay = new Date(data.day).getDay();
+            const currentDay = new Date(startTime).getDay();
 
             // Filters through workSchedules to find the one assigned to the queried user
             const workSchedules = await cds.run(SELECT.from(WorkSchedules)
@@ -59,8 +56,8 @@ module.exports = async function(srv) {
 
             // Create local variables for WorkHoursStartTime and EndTime
             // and set them equal to the queried day.
-            const WHStartTime = new Date(data.day);
-            const WHEndTime = new Date(data.day);
+            const WHStartTime = new Date(startTime);
+            const WHEndTime = new Date(startTime);
 
             // Format the from- and totime from the daySchedule from:
             // 00:00:00 to 00,00,00 - so setHours can use the values
@@ -129,12 +126,12 @@ module.exports = async function(srv) {
             if (startTime.getTime() < uEndTime.getTime()) {
                 req.reject(400, 'It has been less than 11 hours since last reported work hours');
             }
-         }
+        }
 
          
 
 
-                 ////////////// CHECK MAX HOURS ON PROJECT ///////////////
+        ////////////// CHECK MAX HOURS ON PROJECT ///////////////
         // Create local constants
         const maximumHours = projData.maximumhours;
         const currentHours = projData.currenthours;
