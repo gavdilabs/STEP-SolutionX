@@ -84,9 +84,9 @@ module.exports = async function(srv) {
         // Check if query is within start- and endtime(date) of queried project
 
         // Get queried project using filter and project_ID from queried WorkHours
-        const projFilter = await db.get(Projects).where({"ID": data.project_ID});
-        // Get the first (and only) element in the array "projFilter"
-        const projData = projFilter[0];
+        const projArray = await db.get(Projects).where({"ID": data.project_ID});
+        // Get the first (and only) element in the array "projArray"
+        const projData = projArray[0];
 
         // Create new variables for: "startdate", "enddate", and "projectname"
         const projSD = new Date(projData.startdate);
