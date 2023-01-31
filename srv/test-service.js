@@ -5,8 +5,6 @@ module.exports = async function(srv) {
         //Create Handler runs before CREATE finishes. 
     srv.before('CREATE', 'WorkHours', async (req) => {
         
-
-
         // Grabs only the requested entities from the DB
         const db = srv.transaction(req);
 
@@ -79,6 +77,7 @@ module.exports = async function(srv) {
         }
 
 
+
         //////// CHECK VALIDITY PERIOD //////////
         // Get query's start- and endtime (saved as variables near the top)
         // Get project's start- and enddate from project_ID
@@ -109,7 +108,6 @@ module.exports = async function(srv) {
 
 
 
-
         ///////////// CHECK 11 HOUR INTERVAL ////////////////
         //Filter all workhours with requested users_ID and saves as local variable prevHours. 
         //Await means waiting for query and filter to finish
@@ -127,7 +125,6 @@ module.exports = async function(srv) {
                 req.reject(400, 'It has been less than 11 hours since last reported work hours');
             }
         }
-
          
 
 
