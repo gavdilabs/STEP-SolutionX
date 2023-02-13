@@ -1,0 +1,42 @@
+### Get Users
+GET http://localhost:4004/test/Users
+
+### Post User
+POST http://localhost:4004/test/Users
+Content-Type: application/json
+
+{"username": "Hewo_User", "firstname": "Mac", "lastname": "Intosh", "title": "Apple Developer", "admin": false}
+
+
+
+### Get Projects
+GET http://localhost:4004/test/Projects
+
+
+### Post a project
+POST http://localhost:4004/test/Projects
+Content-Type: application/json
+
+{"projectname": "Test project", "startdate": "2021-04-27", "enddate": "2021-04-30"}
+
+
+
+### Get WorkHours
+GET  http://localhost:4004/test/WorkHours
+
+### Post WorkHours
+POST http://localhost:4004/test/WorkHours
+Content-Type: application/json
+
+{"users_ID": "40466921-7d57-4e76-b14c-e53fd97dcb11", "projects_ID": "20466921-7d57-4e76-b14c-e53fd97dcb12", "day": "2022-02-21", "starttime": "2024-01-24T10:01:23Z", "endtime": "2024-01-24T18:08:23Z"}
+
+
+### Get weekdays
+GET http://localhost:4004/test/WorkSchedules(30466921-7d57-4e76-b14c-e53fd97dcb10)/weekdays/$count
+# "weekdays" is a complex collection, so we cannot query it? Why?
+
+### Post a WorkSchedule
+POST http://localhost:4004/test/WorkSchedules
+Content-Type: application/json
+
+{"weekday": 1, "startdate": "2023-03-21", "enddate": "2023-12-03"}
